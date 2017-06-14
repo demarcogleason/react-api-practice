@@ -4,12 +4,18 @@ import axios from 'axios'
 import './App.css';
 
 class App extends Component {
-
+  constructor(props){
+    super(props);
+    this.state = {
+      results: "",
+    }
+  }
   componentWillMount() {
-    axios.get("https://api.nasa.gov/")
+    axios.get("https://api.nasa.gov/planetary/apod?api_key=FhONhKAslwRSmati7TeGTo3gAD90TwBP8UTen4MM")
     // function (response)
     .then((response) => {
       console.log(response);
+      this.setState({results: response.data  })
     })
     .catch((error) => {
       console.log(error);
@@ -20,11 +26,11 @@ class App extends Component {
     return (
       <div className="App">
         <div className="App-header">
-          <img src={logo} className="App-logo" alt="logo" />
-          <h2>Welcome to React</h2>
+          <img src={this.state.results.hdurl} className="App-logo" alt="logo" />
+          <h2>{this.state.results.title}</h2>
         </div>
         <p className="App-intro">
-          To get started, edit <code>src/App.js</code> and save to reload.
+          {this.state.results.explanation}
         </p>
       </div>
     );
